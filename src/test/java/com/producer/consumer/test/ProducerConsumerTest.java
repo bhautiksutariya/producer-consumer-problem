@@ -55,6 +55,15 @@ class ProducerConsumerTest {
 		Assertions.assertThrows(Exception.class, ()-> producer.produce());
 	}
 	
+	
+	//Test after queue is empty
+	@Test
+	void testProducerSixthValue() throws Exception {
+		produceData();
+		consumer.consume();
+		assertEquals(6, producer.produce());
+	}
+	
 	//Test consumer first value
 	@Test
 	void testConsumerFirstValue() throws Exception {
@@ -81,6 +90,15 @@ class ProducerConsumerTest {
 		assertNotEquals(data, 0);
 	}
 	
+	//Test were queue has started filling
+	@Test
+	void testConsumerSixthValue() throws Exception {
+		produceData();
+		consumeData();
+		produceData();
+		assertEquals(6, consumer.consume());
+	}
+	
 	//Test consumer exception
 	@Test
 	void testConsumerException() throws Exception {
@@ -91,8 +109,7 @@ class ProducerConsumerTest {
 	@Test
 	void testConsumerAfterFiveConsumptionException() throws Exception {
 		produceData();
-		for(int i=0;i<5;i++)
-			consumer.consume();
+		consumeData();
 		Assertions.assertThrows(IndexOutOfBoundsException.class, ()-> consumer.consume());
 	}
 	
@@ -101,6 +118,12 @@ class ProducerConsumerTest {
 	void produceData() throws Exception {
 		for(int i=0;i<5;i++)
 			producer.produce();
+	}
+	
+	//common method for consuming data
+	void consumeData() throws Exception {
+		for(int i=0;i<5;i++)
+			consumer.consume();
 	}
 
 }
