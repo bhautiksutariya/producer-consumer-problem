@@ -1,5 +1,8 @@
 package com.producerconsumer;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -19,19 +22,41 @@ public class ProducerConsumerApplication {
 			}
 		});
 		
-		Thread consumerThread = new Thread(() -> {
+		Thread smsConsumerThread = new Thread(() -> {
 			try {
-				producerConsumer.consume();
+				producerConsumer.smsConsume();
 			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
+		Thread emailConsumerThread = new Thread(() -> {
+			try {
+				producerConsumer.emailConsume();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
+		Thread pushConsumerThread = new Thread(() -> {
+			try {
+				producerConsumer.pushConsume();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		});
 		
 		producerThread.start();
-		consumerThread.start();
+		smsConsumerThread.start();
+		emailConsumerThread.start();
+		pushConsumerThread.start();
 		producerThread.join();
-		
-		
 	}
 
 }

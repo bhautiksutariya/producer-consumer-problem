@@ -12,7 +12,7 @@
 	<artifactId>Producer-consumer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Producer-consumer</name>
-	<description>Task given by Teallab</description>
+	<description>Producer consumer task</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -35,18 +35,20 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+
 		<dependency>
-		    <groupId>org.junit.jupiter</groupId>
-		    <artifactId>junit-jupiter-api</artifactId>
-		    <version>5.6.0-RC1</version>
-		    <scope>test</scope>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 
-		
-		
-		
+
+
+
+
+
+
+
 	</dependencies>
 
 	<build>
