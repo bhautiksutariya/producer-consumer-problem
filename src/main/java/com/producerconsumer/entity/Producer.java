@@ -41,7 +41,7 @@ public class Producer {
 
 		//Push notification
 		data.add("{\"type\":\"push\", \"api\":\"push api\", \"msg\":\"new video is added\", \"relatedTo\":" +
-				"\"user\", \"image\":\"abc.jpg\"}");
+				"\"personalization\", \"image\":\"abc.jpg\"}");
 		data.add("{\"type\":\"push\", \"api\":\"push api\", \"msg\":\"meet celebrity\", \"relatedTo\":" +
 				"\"engagement\", \"image\":\"xyz.jpg\"}");
 		data.add("{\"type\":\"push\", \"api\":\"push api\", \"msg\":\"new video added to series\", \"relatedTo\":" +
@@ -56,9 +56,10 @@ public class Producer {
 		if(queue.items.size()==queue.capacity)
 			throw new Exception("Queue is full");
 		int random = (int)(Math.random()*((data.size()-2)));
-		queue.items.add(data.get(random));
-		System.out.println("Producer produced       = " + data.get(random)+"\n");
-		return data.get(random);
+		String notification = data.get(random);
+		queue.items.add(notification);
+		System.out.println("Producer produced       = " + notification+"\n");
+		return notification;
 	}
 
 }

@@ -1,15 +1,18 @@
-package com.producerconsumer.entity;
+package com.producerconsumer.process;
 
+import com.producerconsumer.entity.Consumer;
+import com.producerconsumer.entity.Producer;
+import com.producerconsumer.entity.Queue;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-public class ProducerConsumer {
+public class ProducerConsumerProcess {
 	
 	private Queue queue;
 	private Producer producer;
 	private Consumer consumer;
 	
-	public ProducerConsumer(int capacity) {
+	public ProducerConsumerProcess(int capacity) {
 		queue = new Queue(capacity);
 		producer = new Producer(queue);
 		consumer = new Consumer(queue);

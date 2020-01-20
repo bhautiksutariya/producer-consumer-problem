@@ -1,7 +1,5 @@
 package com.producerconsumer.notification;
 
-
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -18,14 +16,15 @@ public class NotificationFactory {
         String type=(String) jsonObject.get("type");
 
         if(type.equals("sms"))
-            return new SmsNotification((String)jsonObject.get("api"),(String)jsonObject.get("msg"),
-                    (String)jsonObject.get("number"));
-        else if(type.equals("email"))
-            return new EmailNotification((String)jsonObject.get("api"),(String)jsonObject.get("msg"),
-                    (String)jsonObject.get("email"),(String)jsonObject.get("subject"));
+            return SmsNotification.builder().API((String)jsonObject.get("api")).message((String)jsonObject.get("msg")).
+                    number((String)jsonObject.get("number")).build();
 
-        return new PushNotification((String)jsonObject.get("api"),(String)jsonObject.get("msg"),
-                (String)jsonObject.get("relatedTo"),(String)jsonObject.getOrDefault("image",""));
+        else if(type.equals("email"))
+            return EmailNotification.builder().API((String)jsonObject.get("api")).message((String)jsonObject.get("msg")).
+                    email((String)jsonObject.get("email")).subject((String)jsonObject.get("subject")).build();
+
+        return PushNotification.builder().API((String)jsonObject.get("api")).message((String)jsonObject.get("msg")).
+                type((String)jsonObject.get("relatedTo")).imageUrl((String)jsonObject.getOrDefault("image","")).build();
 
     }
 

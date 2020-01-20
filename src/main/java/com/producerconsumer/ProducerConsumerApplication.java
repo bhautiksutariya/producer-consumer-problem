@@ -1,19 +1,24 @@
 package com.producerconsumer;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.JSONParser;
+import com.producerconsumer.process.ProducerConsumerProcess;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.producerconsumer.entity.ProducerConsumer;
 
 @SpringBootApplication
 public class ProducerConsumerApplication {
 
+	private static int size;
+
+	@Value("${queue.size}")
+	public void setSize(int size) {
+		this.size = size;
+	}
+
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(ProducerConsumerApplication.class, args);
-		ProducerConsumer producerConsumer = new ProducerConsumer(5);
+
+		ProducerConsumerProcess producerConsumer = new ProducerConsumerProcess(size);
 		Thread producerThread = new Thread(() -> {
 			try {
 				producerConsumer.produce();
@@ -21,7 +26,7 @@ public class ProducerConsumerApplication {
 				e.printStackTrace();
 			}
 		});
-		
+
 		Thread smsConsumerThread = new Thread(() -> {
 			try {
 				producerConsumer.smsConsume();
@@ -51,7 +56,7 @@ public class ProducerConsumerApplication {
 				e.printStackTrace();
 			}
 		});
-		
+
 		producerThread.start();
 		smsConsumerThread.start();
 		emailConsumerThread.start();
