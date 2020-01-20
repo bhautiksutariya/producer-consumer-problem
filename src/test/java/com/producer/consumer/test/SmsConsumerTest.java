@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SmsConsumerTest {
 
@@ -35,14 +34,8 @@ public class SmsConsumerTest {
 
     @Test
     public void testSmsType() throws Exception {
-        String data = getSms();
+        String data = consumeSms();
         assertEquals(getType(data),"sms");
-    }
-
-    @Test
-    public void testSmsFactory() throws Exception {
-        String data = getSms();
-        assertTrue(NotificationFactory.getNotification(data) instanceof SmsNotification);
     }
 
     @Test
@@ -52,36 +45,41 @@ public class SmsConsumerTest {
 
     @Test
     public void testSmsNumber() throws Exception {
-        String data = getSms();
+        String data = consumeSms();
         SmsNotification smsNotification= (SmsNotification) NotificationFactory.getNotification(data);
         assertNotNull(smsNotification.getNumber());
     }
 
     @Test
     public void testSmsMessage() throws Exception {
-        String data = getSms();
+        String data = consumeSms();
         SmsNotification smsNotification= (SmsNotification) NotificationFactory.getNotification(data);
         assertNotNull(smsNotification.getMessage());
     }
 
     @Test
     public void testSmsAPI() throws Exception {
-        String data = getSms();
+        String data = consumeSms();
         SmsNotification smsNotification= (SmsNotification) NotificationFactory.getNotification(data);
         assertNotNull(smsNotification.getAPI());
     }
 
     // For sms type
-    String getSms() throws Exception {
+    void getSms() throws Exception {
         if(queue.items.size()==0)
             produceData();
         for(int i=0;i<queue.capacity;i++)
         {
             if(getType(queue.items.get(0)).equals("sms"))
-                return queue.items.removeFirst();
+                return;
             queue.items.removeFirst();
         }
-        return getSms();
+        getSms();
+    }
+
+    String consumeSms() throws Exception {
+        getSms();
+        return consumer.smsConsume();
     }
 
     //Common methods

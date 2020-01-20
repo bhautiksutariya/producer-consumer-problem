@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PushConsumerTest {
 
@@ -31,18 +30,12 @@ public class PushConsumerTest {
         consumer = new Consumer(queue);
     }
 
-    //Test cases for SMS
+    //Test cases for Push
 
     @Test
     public void testPushType() throws Exception {
-        String data = getPush();
+        String data = consumePush();
         assertEquals(getType(data),"push");
-    }
-
-    @Test
-    public void testPushFactory() throws Exception {
-        String data = getPush();
-        assertTrue(NotificationFactory.getNotification(data) instanceof PushNotification);
     }
 
     @Test
@@ -52,36 +45,41 @@ public class PushConsumerTest {
 
     @Test
     public void testPushRelatedTo() throws Exception {
-        String data = getPush();
+        String data = consumePush();
         PushNotification pushNotification= (PushNotification) NotificationFactory.getNotification(data);
         assertNotNull(pushNotification.getType());
     }
 
     @Test
     public void testPushMessage() throws Exception {
-        String data = getPush();
+        String data = consumePush();
         PushNotification pushNotification= (PushNotification) NotificationFactory.getNotification(data);
         assertNotNull(pushNotification.getMessage());
     }
 
     @Test
     public void testPushAPI() throws Exception {
-        String data = getPush();
+        String data = consumePush();
         PushNotification pushNotification= (PushNotification) NotificationFactory.getNotification(data);
         assertNotNull(pushNotification.getAPI());
     }
 
     // For push type
-    String getPush() throws Exception {
+    void getPush() throws Exception {
         if(queue.items.size()==0)
             produceData();
         for(int i=0;i<queue.capacity;i++)
         {
             if(getType(queue.items.get(0)).equals("push"))
-                return queue.items.removeFirst();
+                return;
             queue.items.removeFirst();
         }
-        return getPush();
+        getPush();
+    }
+
+    String consumePush() throws Exception {
+        getPush();
+        return consumer.pushConsume();
     }
 
     //Common methods
