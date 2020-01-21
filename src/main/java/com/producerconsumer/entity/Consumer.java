@@ -1,9 +1,9 @@
 package com.producerconsumer.entity;
 
 import com.producerconsumer.notification.EmailNotification;
-import com.producerconsumer.notification.NotificationFactory;
 import com.producerconsumer.notification.PushNotification;
 import com.producerconsumer.notification.SmsNotification;
+import com.producerconsumer.notification.factory.NotificationFactory;
 
 public class Consumer {
 	
@@ -12,7 +12,7 @@ public class Consumer {
 	public Consumer(Queue queue) {
 		this.queue=queue;
 	}
-	
+
 	public String smsConsume() throws Exception {
 		if(queue.items.isEmpty())
 			throw new Exception("Queue is empty");

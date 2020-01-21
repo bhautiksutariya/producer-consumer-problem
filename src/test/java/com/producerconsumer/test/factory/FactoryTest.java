@@ -1,9 +1,9 @@
-package com.producer.consumer.test;
+package com.producerconsumer.test.factory;
 
 import com.producerconsumer.notification.EmailNotification;
-import com.producerconsumer.notification.NotificationFactory;
 import com.producerconsumer.notification.PushNotification;
 import com.producerconsumer.notification.SmsNotification;
+import com.producerconsumer.notification.factory.NotificationFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +16,7 @@ public class FactoryTest {
         Assertions.assertThrows(Exception.class,()->{ NotificationFactory.getNotification(null); });
     }
 
+    // Email factory
     @Test
     public void testEmailFactory() throws Exception {
         String data = "{\"type\":\"email\", \"api\":\"email api\", \"email\":\"abc@gmail.com\", \"msg\":\"This is sample email message body\", \"subject\":" +
@@ -23,6 +24,7 @@ public class FactoryTest {
         assertTrue(NotificationFactory.getNotification(data) instanceof EmailNotification);
     }
 
+    // Push factory
     @Test
     public void testPushFactory() throws Exception {
         String data = "{\"type\":\"push\", \"api\":\"push api\", \"msg\":\"new video is added\", \"relatedTo\":" +
@@ -30,6 +32,7 @@ public class FactoryTest {
         assertTrue(NotificationFactory.getNotification(data) instanceof PushNotification);
     }
 
+    // Sms factory
     @Test
     public void testSmsFactory() throws Exception {
         String data = "{\"type\":\"sms\", \"api\":\"sms api\", \"msg\":\"get 10% off on next ride\", \"number\":" +

@@ -1,17 +1,18 @@
-package com.producer.consumer.test;
+package com.producerconsumer.test.entity;
 
 import com.producerconsumer.entity.Consumer;
 import com.producerconsumer.entity.Producer;
 import com.producerconsumer.entity.Queue;
-import com.producerconsumer.notification.NotificationFactory;
 import com.producerconsumer.notification.PushNotification;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import com.producerconsumer.notification.factory.NotificationFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.producerconsumer.test.utility.ProducerConsumerTestUtil.getType;
+import static com.producerconsumer.test.utility.ProducerConsumerTestUtil.getTypeof;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PushConsumerTest {
 
@@ -65,33 +66,9 @@ public class PushConsumerTest {
     }
 
     // For push type
-    void getPush() throws Exception {
-        if(queue.items.size()==0)
-            produceData();
-        for(int i=0;i<queue.capacity;i++)
-        {
-            if(getType(queue.items.get(0)).equals("push"))
-                return;
-            queue.items.removeFirst();
-        }
-        getPush();
-    }
-
     String consumePush() throws Exception {
-        getPush();
+        getTypeof("push",queue,producer);
         return consumer.pushConsume();
-    }
-
-    //Common methods
-    void produceData() throws Exception {
-        for(int i=queue.items.size();i<queue.capacity;i++)
-            producer.produce();
-    }
-
-    public String getType(String data) {
-        Object obj= JSONValue.parse(data);
-        JSONObject jsonObject = (JSONObject) obj;
-        return (String)jsonObject.getOrDefault("type","");
     }
 
 }

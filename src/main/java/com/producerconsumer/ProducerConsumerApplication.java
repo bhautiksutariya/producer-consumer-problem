@@ -21,7 +21,8 @@ public class ProducerConsumerApplication {
 		ProducerConsumerProcess producerConsumer = new ProducerConsumerProcess(size);
 		Thread producerThread = new Thread(() -> {
 			try {
-				producerConsumer.produce();
+				while (true)
+					producerConsumer.produce();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -29,9 +30,8 @@ public class ProducerConsumerApplication {
 
 		Thread smsConsumerThread = new Thread(() -> {
 			try {
-				producerConsumer.smsConsume();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				while (true)
+					producerConsumer.smsConsume();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -39,9 +39,8 @@ public class ProducerConsumerApplication {
 
 		Thread emailConsumerThread = new Thread(() -> {
 			try {
-				producerConsumer.emailConsume();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				while (true)
+					producerConsumer.emailConsume();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -49,9 +48,8 @@ public class ProducerConsumerApplication {
 
 		Thread pushConsumerThread = new Thread(() -> {
 			try {
-				producerConsumer.pushConsume();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				while (true)
+					producerConsumer.pushConsume();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

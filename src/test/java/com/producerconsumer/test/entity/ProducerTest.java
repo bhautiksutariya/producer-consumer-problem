@@ -1,4 +1,4 @@
-package com.producer.consumer.test;
+package com.producerconsumer.test.entity;
 
 import com.producerconsumer.entity.Consumer;
 import com.producerconsumer.entity.Producer;
@@ -6,6 +6,8 @@ import com.producerconsumer.entity.Queue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static com.producerconsumer.test.utility.ProducerConsumerTestUtil.produceData;
 
 public class ProducerTest {
 
@@ -27,14 +29,8 @@ public class ProducerTest {
     // Test case when queue is full
     @Test
     public void testIsQueueFull() throws Exception {
-        produceData();
+        produceData(queue,producer);
         Assertions.assertThrows(Exception.class,()->{ producer.produce(); });
-    }
-
-    // For producing data
-    void produceData() throws Exception {
-        for(int i=queue.items.size();i<queue.capacity;i++)
-            producer.produce();
     }
 
 }

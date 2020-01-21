@@ -1,17 +1,18 @@
-package com.producer.consumer.test;
+package com.producerconsumer.test.entity;
 
 import com.producerconsumer.entity.Consumer;
 import com.producerconsumer.entity.Producer;
 import com.producerconsumer.entity.Queue;
 import com.producerconsumer.notification.EmailNotification;
-import com.producerconsumer.notification.NotificationFactory;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import com.producerconsumer.notification.factory.NotificationFactory;
+import com.producerconsumer.test.utility.ProducerConsumerTestUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.producerconsumer.test.utility.ProducerConsumerTestUtil.getType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class EmailConsumerTest {
 
@@ -71,34 +72,11 @@ public class EmailConsumerTest {
         assertNotNull(emailNotification.getAPI());
     }
 
-    // For email type
-    void getEmail() throws Exception {
-        if(queue.items.size()==0)
-            produceData();
-        for(int i=0;i<queue.capacity;i++)
-        {
-            if(getType(queue.items.get(0)).equals("email"))
-                return;
-            queue.items.removeFirst();
-        }
-        getEmail();
-    }
-
+    //For email type
     String consumeEmail() throws Exception {
-        getEmail();
+        ProducerConsumerTestUtil.getTypeof("email",queue,producer);
         return consumer.emailConsume();
     }
 
-    //Common methods
-    void produceData() throws Exception {
-        for(int i=queue.items.size();i<queue.capacity;i++)
-            producer.produce();
-    }
-
-    public String getType(String data) {
-        Object obj= JSONValue.parse(data);
-        JSONObject jsonObject = (JSONObject) obj;
-        return (String)jsonObject.getOrDefault("type","");
-    }
 
 }

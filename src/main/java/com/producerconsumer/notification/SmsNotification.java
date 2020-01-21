@@ -1,9 +1,9 @@
 package com.producerconsumer.notification;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class SmsNotification extends Notification {
 
     private String number;
