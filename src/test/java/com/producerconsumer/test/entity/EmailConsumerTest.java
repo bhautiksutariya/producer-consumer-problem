@@ -9,6 +9,8 @@ import com.producerconsumer.test.utility.ProducerConsumerTestUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import static com.producerconsumer.test.utility.ProducerConsumerTestUtil.getType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
